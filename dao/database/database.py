@@ -5,20 +5,18 @@ class Database:
     """
     this is a simulation of database basis operations that include query from file and write data to file.
     Methods:
-        __init__: default constructor that init 4 attributes for objects storage:
-            _students, _admins, _subjects, and _enrollments
+        __init__: default constructor that init 3 attributes for objects storage:
+            _students, _admins, _subjects
             **Note**:   @_init_file() should be called to physically init a file in disk.
 
         get_students: public method for getting all students basic information.
         get_admins: public method for getting all admins basic information.
-        get_subjects: public method for getting all subjects basic information.
-        get_enrollments: public method for getting all subjects basic information.
+        get_subjects: public method for getting all subjects information.
         **Note**:   @_load_file() should be called to load data from data file in disk in all getter methods.
 
         set_students: public method for saving students information to database file.
         set_admins: public method for saving admins information to database file.
-        set_subjects: public method for saving all subjects information to database file.
-        set_enrollments: public method for saving all enrollments information to database file.
+        set_subjects: public method for saving a student's all subjects information to database file.
         **Note**:   @_load_file() should be called to load data from data file in disk in all getter methods.
                     @_overwrite_data should be called to physically saving data to data file in disk.
 
@@ -32,10 +30,8 @@ class Database:
         self._students = []
         # _admins array includes all admins information
         self._admins = []
-        # _subjects array includes all subjects information
+        # _enrollments array includes all students subject enrollments information
         self._subjects = []
-        # _enrollments array includes all students enrollments information
-        self._enrollments = []
 
         """
         step 2: state the file path as static and then init the file if file is not exist.
@@ -59,11 +55,6 @@ class Database:
         # getter for _subjects
         self._load_data()
         return self._subjects
-
-    def get_enrollments(self):
-        # getter for _enrollments
-        self._load_data()
-        return self._enrollments
 
     def write_students(self, students):
         # setter for _students
@@ -95,17 +86,6 @@ class Database:
 
         # 2. process data
         self._subjects = subjects
-
-        # 3 call overwrite method for saving data to file
-        self._overwrite_data()
-
-    def write_enrollments(self, enrollments):
-        # setter for _enrollments
-        # 1. load latest data
-        self._load_data()
-
-        # 2. process data
-        self._enrollments = enrollments
 
         # 3 call overwrite method for saving data to file
         self._overwrite_data()

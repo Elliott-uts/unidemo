@@ -1,14 +1,13 @@
-class Enrollment:
+class Subject:
     """
-    Enrollment class
-    Declare the attributes and functions in Enrollment
+    Subject class
+    Declare the attributes and functions in subject
 
     Fields:
-        _subject_id
         _student_id
+        _subject_id
         _subject_grade
         _subject_mark
-        _subject_category
     Methods:
         1. must override following 4 methods.
             __init__    for definition a full parameters constructor
@@ -26,10 +25,10 @@ class Enrollment:
     """
 
     def __init__(self, student_id, subject_id, subject_mark, subject_grade, subject_category):
-        # _student_id is an attribute of Student class, exist as part of composite primary key of enrollment table.
+        # _student_id is an attribute of Student class, exist as part of composite primary key of Subject table.
         self._student_id = student_id
 
-        # _subject_id is an attribute of Subject class, exist as part of composite primary key of enrollment table.
+        # _subject_id is an attribute of Subject class, exist as part of composite primary key of Subject table.
         # one student can enroll at most 4 subjects.
         self._subject_id = subject_id
 
@@ -81,16 +80,16 @@ class Enrollment:
         :param  other:   comparative object
         :return:
             True:   if the hash value is equal
-            False:  if the other object is not an instance of Enrollment class
+            False:  if the other object is not an instance of subject class
                     or
                     if the other object's combination of_subject_id and _student_id is not the same.
         """
-        return (isinstance(other, Enrollment) and other.get_subject_id() == self._subject_id
+        return (isinstance(other, Subject) and other.get_subject_id() == self._subject_id
                 and other.get_student_id() == self._student_id)
 
     def __str__(self):
         """
-        override the super default str method to customize an output for a specific Enrollment object
+        override the super default str method to customize an output for a specific subject object
         :return: a shorten desc combination of all attributes.
         """
         return ("studentId: {}, \tsubjectId: {}, \tmark: {}, \tgrade: {}"

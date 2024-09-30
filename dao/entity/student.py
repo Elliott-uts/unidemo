@@ -8,6 +8,8 @@ class Student:
         _student_name
         _student_email
         _student_password
+        _student_category
+        _subject_list
     Methods:
         1. must override following 4 methods.
             __init__    for definition a full parameters constructor
@@ -24,7 +26,7 @@ class Student:
                         please use traditional getter, don't use property to define getter
     """
 
-    def __init__(self, student_id, student_name, student_email, student_password, subject_category=""):
+    def __init__(self, student_id, student_name, student_email, student_password, student_category="", subject_list=[]):
         # _student_id is the unique identifier for each student, exist as primary key in student table.
         # ** Note ** randomly generated number formatted as 6-digit value, ranging from 000001 to 999999.
         self._student_id = student_id
@@ -43,8 +45,14 @@ class Student:
         #   2. for password safety, it must be stored with encryption (put it simply by using md5)
         self._student_password = student_password
 
-        # _subject_category is calculated by
-        self._subject_category = subject_category
+        # _student_category refers to if a student passes a course, if the average mark of all subjects is greater or
+        # equal than 50, the student would be assigned PASS, otherwise, FAIL.
+        # ** Note ** default value is ""
+        self._student_category = student_category
+
+        # _subject_list is the student's all subject list,
+        # ** Note ** default value is empty array.
+        self._subject_list = subject_list
 
     def get_student_id(self):
         # getter for _student_id
@@ -77,6 +85,14 @@ class Student:
     def set_student_password(self, student_password):
         # setter for _student_password
         self._student_password = student_password
+
+    def get_student_category(self):
+        # getter for _student_category
+        return self._student_category
+
+    def set_student_category(self, student_category):
+        # setter for _student_category
+        self._student_category = student_category
 
     def __eq__(self, other):
         """
