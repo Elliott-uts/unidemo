@@ -26,7 +26,8 @@ class Student:
                         please use traditional getter, don't use property to define getter
     """
 
-    def __init__(self, student_id, student_name, student_email, student_password, student_category="", subject_list=[]):
+    def __init__(self, student_id, student_name, student_email, student_password,
+                 student_category=None, subject_list=None):
         # _student_id is the unique identifier for each student, exist as primary key in student table.
         # ** Note ** randomly generated number formatted as 6-digit value, ranging from 000001 to 999999.
         self._student_id = student_id
