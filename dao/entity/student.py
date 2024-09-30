@@ -5,7 +5,9 @@ class Student:
 
     Fields:
         _student_id
-        TODO
+        _student_name
+        _student_email
+        _student_password
     Methods:
         1. must override following 4 methods.
             __init__    for definition a full parameters constructor
@@ -22,10 +24,27 @@ class Student:
                         please use traditional getter, don't use property to define getter
     """
 
-    def __init__(self, student_id, subjects):
-        # TODO please complete the other attributes
+    def __init__(self, student_id, student_name, student_email, student_password, subject_category=""):
         # _student_id is the unique identifier for each student, exist as primary key in student table.
+        # ** Note ** randomly generated number formatted as 6-digit value, ranging from 000001 to 999999.
         self._student_id = student_id
+
+        # _student_name prefers to the preferred given name of a student.
+        self._student_name = student_name
+
+        # _student_email is the student's official email, three important notes:
+        #   1. must be unique, and exist as key parameter to login in.
+        #   2. exist as key parameter to login in
+        #   3. must meet a specific pattern
+        self._student_email = student_email
+
+        # _student_password is the student's logining password (GUI and CLI), two important notes:
+        #   1. must meet a specific pattern
+        #   2. for password safety, it must be stored with encryption (put it simply by using md5)
+        self._student_password = student_password
+
+        # _subject_category is calculated by
+        self._subject_category = subject_category
 
     def get_student_id(self):
         # getter for _student_id
@@ -35,24 +54,51 @@ class Student:
         # setter for _student_id
         self._student_id = student_id
 
-    def __eq__(self, __value):
+    def get_student_name(self):
+        # getter for _student_name
+        return self._student_name
+
+    def set_student_name(self, student_name):
+        # setter for _student_name
+        self._student_name = student_name
+
+    def get_student_email(self):
+        # getter for _student_email
+        return self._student_email
+
+    def set_student_email(self, student_email):
+        # setter for _student_email
+        self._student_email = student_email
+
+    def get_student_password(self):
+        # getter for _student_password
+        return self._student_password
+
+    def set_student_password(self, student_password):
+        # setter for _student_password
+        self._student_password = student_password
+
+    def __eq__(self, other):
         """
-        TODO please
-        :param __value:
-        :return:
+        :param other:   comparative object
+        :return:    True: if the hash value is equal
+                    False:  if the other object is not an instance of Student class
+                    or
+                    if the other object's _student_id is not the same as default one's.
         """
-        return ""
+        return isinstance(other, Student) and other.get_student_id() == self._student_id
 
     def __str__(self):
         """
-        TODO please
-        :return:
+        override the super default str method to customize an output for a specific Admin object
+        :return: a shorten desc combination staff_id and staff_name
         """
-        return ""
+        return ("studentId: {}, \tstudentName: {}, \tstudentEmail: {}"
+                .format(self._student_id, self._student_name, self._student_email))
 
     def __hash__(self):
         """
-        TODO please
-        :return:
+        override the super default hash method to customize a hash value by using student_id for better understanding.
+        :return: hash value of _student_id
         """
-        return ""
+        return hash(self._student_id)

@@ -5,7 +5,8 @@ class Admin:
 
     Fields:
         _staff_id
-        TODO
+        _staff_name
+        _staff_email
     Methods:
         1. must override following 4 methods.
             __init__    for definition a full parameters constructor
@@ -22,10 +23,11 @@ class Admin:
                         please use traditional getter, don't use property to define getter
     """
 
-    def __init__(self, staff_id):
-        # TODO please complete the other attributes
+    def __init__(self, staff_id, staff_name):
         # _staff_id is the unique identifier for each staff, exist as primary key of admin table
         self._staff_id = staff_id
+        # _staff_name is the staff preferred given name.
+        self._staff_name = staff_name
 
     def get_staff_id(self):
         # getter for staff_id
@@ -35,27 +37,37 @@ class Admin:
         # setter for staff_id
         self._staff_id = staff_id
 
-    def __eq__(self, __value):
+    def get_staff_name(self):
+        # getter of staff_name
+        return self._staff_name
+
+    def set_staff_name(self, staff_name):
+        # setter of staff_name
+        self._staff_name = staff_name
+
+    def __eq__(self, other):
         """
-        TODO please
-        :param __value:
-        :return:
+        :param other:   comparative object
+        :return:    True: if the hash value is equal
+                    False:  if the other object is not an instance of Admin class
+                    or
+                    if the other object's _staff_id is not the same as default one's.
         """
-        return ""
+        return isinstance(other, Admin) and other.get_staff_id() == self._staff_id
 
     def __str__(self):
         """
-        TODO please
-        :return:
+        override the super default str method to customize an output for a specific Admin object
+        :return: a shorten desc combination staff_id and staff_name
         """
-        return ""
+        return "staffId: {}, \t staffName: {}".format(self._staff_id, self._staff_name)
 
     def __hash__(self):
         """
-        TODO please
-        :return:
+        override the super default hash method to customize a hash value by using staff_id for better understanding.
+        :return: hash value of subject_id
         """
-        return ""
+        return hash(self._staff_id)
 
 
 
