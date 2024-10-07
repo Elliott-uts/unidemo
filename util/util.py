@@ -9,30 +9,50 @@ class Util:
         pass
 
     @staticmethod
-    def check_email_pattern(email) -> None:
+    def check_pattern(email, password) -> bool:
+
+        # 1: check parameters to find whether they meet the pattern requirements.
+        #   please call Util.check_email_pattern to check whether email is valid.
+        #   please call Util.check_password_pattern to check whether password is valid
+        ret1 = Util.check_email_pattern(email)
+        ret2 = Util.check_password_pattern(password)
+
+        # 2 encapsulate result of combination of ret1 and ret2
+        ret = ret1 and ret2
+        if ret:
+            print("Email and password formats acceptable.")
+        else:
+            print("Incorrect email or passport format.")
+
+        return ret
+
+    @staticmethod
+    def check_email_pattern(email) -> bool:
         """
         emails should end with the domain “@university.com”,
         hence firstname.lastname@university.com is a valid email,
         while firstname.lastname@university is not
 
-        :param email:
-        :return:
+        :param email
+        :return:    True: meet pattern
+                    False(default value): don't meet pattern
         """
         # TODO
-        pass
+        return False
 
     @staticmethod
-    def check_password_pattern(password):
+    def check_password_pattern(password) -> bool:
         """
         A password is considered valid if it meets the following criteria:
             (i) It starts with an upper-case character,
             (ii) It contains at least five (5) letters,
             (iii) It is followed by three (3) or more digits.
-        :param password:
-        :return:
+        :param password
+        :return: True:  meet pattern
+                 False: don't meet pattern
         """
         # TODO
-        pass
+        return False
 
     @staticmethod
     def encode_md5(content) -> str:

@@ -21,11 +21,11 @@ class CLIUniApp:
 
             # show admin menu
             if option == 'A':
-                self._admin_control.show_admin_menu()
+                self._admin_control.show_admin_main_menu()
 
             # show student menu
             elif option == 'S':
-                self._student_control.show_student_menu()
+                self._student_control.show_student_main_menu()
 
             # exit the system
             elif option == 'X':
