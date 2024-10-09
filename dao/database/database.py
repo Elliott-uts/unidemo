@@ -4,7 +4,6 @@ import os
 from dao.entity.admin import Admin
 from dao.entity.student import Student
 from dao.entity.subject import Subject
-from util.util import object_to_json
 
 
 class Database:

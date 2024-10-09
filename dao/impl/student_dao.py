@@ -2,7 +2,7 @@ from typing import List
 
 from dao.entity.student import Student
 from dao.impl.abs_dao import AbsDao
-from util.exception import DataAccessException
+from util.exception import DataAccessException, PrimaryKeyDuplicationException, UniqueKeyDuplicationException
 
 
 class StudentDao(AbsDao):
@@ -156,8 +156,8 @@ class StudentDao(AbsDao):
     def raise_dao_exception_if_repeated(students, student):
         for item in students:
             if item.get_student_id() == student.get_student_id():
-                raise DataAccessException("Student id (" + student.get_student_id() + ") already exists.")
+                raise PrimaryKeyDuplicationException("Student id (" + student.get_student_id() + ") already exists.")
             if item.get_student_name() == student.get_student_name():
-                raise DataAccessException("Student name (" + student.get_student_name() + ") already exists.")
+                raise UniqueKeyDuplicationException("Student name (" + student.get_student_name() + ") already exists.")
             if item.get_student_email() == student.get_student_email():
-                raise DataAccessException("Student email (" + student.get_student_email() + ") already exists.")
+                raise UniqueKeyDuplicationException("Student email (" + student.get_student_email() + ") already exists.")

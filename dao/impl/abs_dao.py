@@ -1,4 +1,5 @@
 from dao.database.database import Database
+from util import util
 from util.exception import DataAccessException
 
 
@@ -15,19 +16,15 @@ class AbsDao:
     def __init__(self):
         self._database = Database()
 
+    @staticmethod
     def raise_dao_exception_if_any_empty(self, **params):
         """if any param is empty，raise data access exception，and show them"""
-        empty_params = [key for key, value in params.items() if self.is_empty(value)]
+        empty_params = [key for key, value in params.items() if util.is_empty(value)]
         if empty_params:
             raise DataAccessException(f"some params are empty: {', '.join(empty_params)}, please check and try again.")
 
+    @staticmethod
     def raise_dao_exception_if_all_empty(self, **params):
         """if all params are empty，raise data access exception，and show them all"""
-        if all(self.is_empty(value) for value in params.values()):
+        if all(util.is_empty(value) for value in params.values()):
             raise DataAccessException(f"all params are empty: {', '.join(params.keys())}, please check and try again.")
-
-    @staticmethod
-    def is_empty(param):
-        """check single param if it is empty"""
-        return param is None or param == ""
-

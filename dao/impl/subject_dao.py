@@ -2,6 +2,7 @@ from typing import List
 
 from dao.entity.subject import Subject
 from dao.impl.abs_dao import AbsDao
+from util.exception import PrimaryKeyDuplicationException, UniqueKeyDuplicationException
 
 
 class SubjectDao(AbsDao):
@@ -29,11 +30,18 @@ class SubjectDao(AbsDao):
 
         :param      subject: subject enrollment information, excluding mark and grade
         """
+        # 0: check primary key and non-nullable keys
+        self.raise_dao_exception_if_any_empty(student_id=subject.get_student_id(),
+                                              subject_id=subject.get_subject_id())
+
         # 1: query subjects list
         subjects = self._database.get_subjects()
 
         # 2: check for none and duplicate entity
         if subjects:
+            # check duplication
+            self.raise_dao_exception_if_repeated(subjects, subject)
+
             subjects.append(subject)
         else:
             subjects = [subject]
@@ -48,6 +56,9 @@ class SubjectDao(AbsDao):
         :param      student_id:     student's id, primary key in database
         :return:    Student or empty array (if there is no entity is related to parameter)
         """
+        # 0: check non-nullable params
+        self.raise_dao_exception_if_any_empty(student_id=student_id)
+
         # 1: query all subject list
         subjects = self._database.get_subjects()
         # check if subjects list is empty
@@ -67,6 +78,9 @@ class SubjectDao(AbsDao):
         :param      subject_id:     subject id
         :return:    Subject or null (if there is no entity is related to parameter)
         """
+        # 0: check non-nullable params
+        self.raise_dao_exception_if_any_empty(student_id=student_id, subject_id=subject_id)
+
         # 1: query all subject list
         subjects = self._database.get_subjects()
         # check if subjects list is empty
@@ -86,6 +100,9 @@ class SubjectDao(AbsDao):
         :param      student_id: student's id, primary key in database
         :param      subject_id: subject id
         """
+        # 0: check non-nullable params
+        self.raise_dao_exception_if_any_empty(student_id=student_id, subject_id=subject_id)
+
         # 1: query all subjects
         subjects = self._database.get_subjects()
         # check if students list is empty
@@ -105,6 +122,9 @@ class SubjectDao(AbsDao):
 
         :param      student_id: student's id, primary key in database
         """
+        # 0: check non-nullable params
+        self.raise_dao_exception_if_any_empty(student_id=student_id)
+
         # 1: query all subjects
         subjects = self._database.get_subjects()
         # check if students list is empty
@@ -124,15 +144,29 @@ class SubjectDao(AbsDao):
 
         :param subject: subject enrollment information, student_id and subject_id must be included
         """
+        # 0: check non-nullable params
+        self.raise_dao_exception_if_any_empty(subject=subject)
+        self.raise_dao_exception_if_any_empty(subject_id=subject.get_subject_id(), student_id=subject.get_student_id())
+
         # 1: query subjects
         subjects = self._database.get_subjects()
 
         # 2: remove subjects that should be deleted
         remain_subjects = [item for item in subjects if (item.get_student_id() != subject.get_student_id()
                                                          or item.get_subject_id() != subject.get_subject_id())]
+        # 3: check duplication
+        self.raise_dao_exception_if_repeated(subjects, subject)
 
         # 3: add new subject that should be added
         remain_subjects.append(subject)
 
         # 4: saving data to database
         self._database.write_subjects(remain_subjects)
+
+    @staticmethod
+    def raise_dao_exception_if_repeated(subjects, subject):
+        for item in subjects:
+            if item.get_student_id() == subject.get_student_id() and item.get_subject_id() == subject.get_subject_id():
+                raise PrimaryKeyDuplicationException(
+                    "Student id (" + subject.get_student_id() + ") and subject id ("
+                    + subject.get_subject_id() + ") already exists.")

@@ -1,16 +1,9 @@
 import json
 
 
-def object_to_json(students, admins, subjects) -> str:
-    student_dicts = [student.__dict__ for student in students]
-    admin_dicts = [admin.__dict__ for admin in admins]
-    subject_dicts = [subject.__dict__ for subject in subjects]
-    all_dicts = student_dicts + admin_dicts + subject_dicts
-    return json.dumps(all_dicts, indent=4)
-
-
-def json_to_object(json):
-    pass
+def is_empty(param) -> bool:
+    """check single param if it is empty"""
+    return param is None or param == ""
 
 
 def check_pattern(email, password) -> bool:
