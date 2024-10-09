@@ -8,6 +8,7 @@ class Subject:
         _subject_id
         _subject_grade
         _subject_mark
+
     Methods:
         1. must override following 4 methods.
             __init__    for definition a full parameters constructor
@@ -24,7 +25,7 @@ class Subject:
                         please use traditional getter, don't use property to define getter
     """
 
-    def __init__(self, student_id, subject_id, subject_mark, subject_grade, subject_category):
+    def __init__(self, student_id, subject_id, subject_mark, subject_grade):
         # _student_id is an attribute of Student class, exist as part of composite primary key of Subject table.
         self._student_id = student_id
 
@@ -101,3 +102,12 @@ class Subject:
         :return: hash value of _student_id + _subject_id
         """
         return hash(self._student_id + self._subject_id)
+
+    def to_dict(self):
+        return {"student_id": self._student_id, "subject_id": self._subject_id,
+                "grade": self._subject_grade, "mark": self._subject_mark}
+
+    @classmethod
+    def from_dict(cls, dict_data):
+        return cls(dict_data['student_id'], dict_data['subject_id'], dict_data['grade']
+                   , dict_data['mark'])

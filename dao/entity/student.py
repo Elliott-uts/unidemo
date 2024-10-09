@@ -119,3 +119,14 @@ class Student:
         :return: hash value of _student_id
         """
         return hash(self._student_id)
+
+    def to_dict(self):
+        return {"id": self._student_id, "name": self._student_name,
+                "email": self._student_email, "password": self._student_password,
+                "category": self._student_category}
+
+    @classmethod
+    def from_dict(cls, dict_data):
+        return cls(dict_data['id'], dict_data['name'], dict_data['email']
+                   ,dict_data['password'], dict_data['category'])
+

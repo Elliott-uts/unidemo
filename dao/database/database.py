@@ -1,9 +1,20 @@
-from util.util import Util
+import json
+import os
+
+from dao.entity.admin import Admin
+from dao.entity.student import Student
+from dao.entity.subject import Subject
+from util.util import object_to_json
 
 
 class Database:
     """
     this is a simulation of database basis operations that include query from file and write data to file.
+    Fields:
+        _students       student array
+        _subjects       subject enrollment array
+        _admin          admin array
+        _data_file_path database file
     Methods:
         __init__: default constructor that init 3 attributes for objects storage:
             _students, _admins, _subjects
@@ -24,7 +35,7 @@ class Database:
 
     def __init__(self):
         """
-        step 1: define 4 attributes parsed from student.data file
+        step 1: define 3 attributes parsed from student.data file
         """
         # _students array, show all students information
         self._students = []
@@ -36,10 +47,12 @@ class Database:
         """
         step 2: state the file path as static and then init the file if file is not exist.
         """
-        # 2.1 declare the file's static path.
-        self._data_file_path = ""
-        # 2.2 init file if it is not exist.
-        self._init_file()
+        # current work path
+        current_dir = os.getcwd()
+        # project root path
+        project_root = os.path.abspath(os.path.join(current_dir, '..'))
+        # data file path
+        self._data_file_path = os.path.join(project_root, 'student.data')
 
     def get_students(self):
         # getter for _students
@@ -84,36 +97,38 @@ class Database:
         # 1. load latest data
         self._load_data()
 
-        # 2. process data
+        # # 2. process data
         self._subjects = subjects
-
-        # 3 call overwrite method for saving data to file
+        #
+        # # 3 call overwrite method for saving data to file
         self._overwrite_data()
 
     def _load_data(self):
         # load data from file using JSON tools
-
         # step 1: load all data from student.data by using _data_file_path
-        # TODO
+        with open(self._data_file_path, 'r') as file:
+            content = file.read()
 
-        # step 2: parse json string to objects (students array, admin array, subject array, enrollment array)
-        # TODO
+        # step 2: parse json string to objects (students array, admin array, subject array)
+        if content:
+            data = json.loads(content)
 
-        # step 3: assign temp objects to attributes.
-        # TODO
-
-        pass
+            # step 3: assign temp objects to fields.
+            self._students = [Student.from_dict(student) for student in data.get('students', [])]
+            self._admins = [Admin.from_dict(admin) for admin in data.get('admins', [])]
+            self._subjects = [Subject.from_dict(subject) for subject in data.get('subjects', [])]
 
     def _overwrite_data(self):
         # overwrite all data to student.data file
 
         # step 1: format objects to json string
-        json_str = Util.object_to_json([self._students, self._admins, self._enrollments, self._subjects])
+        data = {
+            "students": [student.to_dict() for student in self._students],
+            "admins": [admin.to_dict() for admin in self._admins],
+            "subjects": [subject.to_dict() for subject in self._subjects]
+        }
+        json_str = json.dumps(data, indent=4)
 
-        # step 2: TODO
-        pass
-
-    def _init_file(self):
-        # if file is not exist, init the file.
-        # TODO
-        pass
+        # step 2: overwrite all data to file
+        with open(self._data_file_path, 'w') as file:
+            file.write(json_str)

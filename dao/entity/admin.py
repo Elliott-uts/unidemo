@@ -21,13 +21,18 @@ class Admin:
             setter      for encapsulate the modification to all attributes.
                         **NOTE** for better understanding encapsulation,
                         please use traditional getter, don't use property to define getter
+        3. must include two special method for JSON transmission
+            to_dict
+            from_dict
     """
 
-    def __init__(self, staff_id, staff_name):
+    def __init__(self, staff_id, staff_name, staff_email):
         # _staff_id is the unique identifier for each staff, exist as primary key of admin table
         self._staff_id = staff_id
         # _staff_name is the staff preferred given name.
         self._staff_name = staff_name
+        # _staff_email is the staff formal email
+        self._staff_email = staff_email
 
     def get_staff_id(self):
         # getter for staff_id
@@ -44,6 +49,14 @@ class Admin:
     def set_staff_name(self, staff_name):
         # setter of staff_name
         self._staff_name = staff_name
+
+    def get_staff_email(self):
+        # getter of staff_email
+        return self._staff_email
+
+    def set_staff_email(self, staff_email):
+        # setter of staff_email
+        self._staff_email = staff_email
 
     def __eq__(self, other):
         """
@@ -68,6 +81,13 @@ class Admin:
         :return: hash value of subject_id
         """
         return hash(self._staff_id)
+
+    def to_dict(self):
+        return {"id": self._staff_id, "name": self._staff_name, "email": self._staff_email}
+
+    @classmethod
+    def from_dict(cls, dict_data):
+        return cls(dict_data['id'], dict_data['name'], dict_data['email'])
 
 
 

@@ -1,8 +1,16 @@
+from dao.database.database import Database
 from dao.entity.admin import Admin
 from dao.impl.abs_dao import AbsDao
 
 
 class AdminDao(AbsDao):
+    """
+    ADMIN Data Access Object
+    providing basic query methods:
+    Methods:
+        query_admin_by_staff_id
+        query_admin_by_staff_name
+    """
 
     def __init__(self):
         super().__init__()
@@ -13,7 +21,9 @@ class AdminDao(AbsDao):
         :param staff_id:  staff_id
         :return: Admin
         """
-        pass
+        admins = self._database.get_admins()
+        matching_admins = [admin for admin in admins if admin.get_staff_id() == staff_id]
+        return matching_admins[0] if matching_admins else None
 
     def query_admin_by_staff_name(self, staff_name) -> Admin:
         """
@@ -21,4 +31,6 @@ class AdminDao(AbsDao):
         :param staff_name: staff name
         :return: Admin
         """
-        pass
+        admins = self._database.get_admins()
+        matching_admins = [admin for admin in admins if admin.get_staff_name() == staff_name]
+        return matching_admins[0] if matching_admins else None
