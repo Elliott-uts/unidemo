@@ -1,0 +1,38 @@
+{
+    "students": [
+        {
+            "id": "id2",
+            "name": "name2",
+            "email": "email2",
+            "password": "pass2",
+            "category": "c2"
+        },
+        {
+            "id": "id1",
+            "name": "name1",
+            "email": "name101",
+            "password": "password164",
+            "category": "c1"
+        }
+    ],
+    "admins": [
+        {
+            "id": "id1",
+            "name": "name1",
+            "email": "email1"
+        },
+        {
+            "id": "id2",
+            "name": "name2",
+            "email": "email2"
+        }
+    ],
+    "subjects": [
+        {
+            "student_id": "id1",
+            "subject_id": "id1",
+            "grade": "B",
+            "mark": 100
+        }
+    ]
+}
