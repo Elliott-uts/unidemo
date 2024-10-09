@@ -2,6 +2,7 @@ from typing import List
 
 from dao.entity.student import Student
 from dao.impl.abs_dao import AbsDao
+from util.exception import DataAccessException
 
 
 class StudentDao(AbsDao):
@@ -31,25 +32,20 @@ class StudentDao(AbsDao):
         :param      student: student information, excluding _student_category and _subject_list
         :return:    return none if process succeed
         """
+
+        # 0: check primary key and non-nullable keys
+        self.raise_dao_exception_if_any_empty(student_id=student.get_student_id(),
+                                              student_name=student.get_student_name(),
+                                              student_email=student.get_student_email())
+
         # 1: query students list
         students = self._database.get_students()
 
         # 2: check for none and duplicate entity
         if students:
-            students.append(student)
             # check duplicate entity
-            # matching_id = [item for item in students if (item.get_student_id() == student.get_student_id())]
-            # matching_name = [item for item in students if (item.get_student_name() == student.get_student_name())]
-            # matching_email = [item for item in students if (item.get_student_email() == student.get_student_email())]
-            #
-            # if matching_id:
-            #     raise Exception("Student id already exists.")
-            # elif matching_name:
-            #     raise Exception("Student " + student.get_student_name() + " already exists.")
-            # elif matching_email:
-            #     raise Exception("Student " + student.get_student_email() + " already exists.")
-            # else:
-            #     students.append(student)
+            self.raise_dao_exception_if_repeated(students, student)
+            students.append(student)
         else:
             students = [student]
 
@@ -63,6 +59,9 @@ class StudentDao(AbsDao):
         :param      student_id:     student's id, primary key in database
         :return:    Student or None(if there is no entity is related to parameter)
         """
+        # 0: check param
+        self.raise_dao_exception_if_any_empty(student_id=student_id)
+
         # 1: query all student
         students = self._database.get_students()
         # check if students list is empty
@@ -81,6 +80,9 @@ class StudentDao(AbsDao):
         :param      email:     student's email, unique key in database
         :return:    Student or None(if there is no entity is related to parameter)
         """
+        # 0: check param
+        self.raise_dao_exception_if_any_empty(email=email)
+
         # 1: query all student
         students = self._database.get_students()
         # check if students list is empty
@@ -107,16 +109,25 @@ class StudentDao(AbsDao):
 
         :param student: student information, student_id must be included
         """
+        # 0: check param
+        self.raise_dao_exception_if_any_empty(student=student)
+        self.raise_dao_exception_if_any_empty(student_id=student.get_student_id(),
+                                              student_name=student.get_student_name(),
+                                              student_email=student.get_student_email())
+
         # 1: query student
         students = self._database.get_students()
 
         # 2: remove student that should be deleted
         remain_students = [item for item in students if item.get_student_id() != student.get_student_id()]
 
-        # 3: add new student that should be added
+        # 3: check duplication
+        self.raise_dao_exception_if_repeated(remain_students, student)
+
+        # 4: add new student that should be added
         remain_students.append(student)
 
-        # 4: saving data to database
+        # 5: saving data to database
         self._database.write_students(remain_students)
 
     def delete_student_by_id(self, student_id):
@@ -126,6 +137,9 @@ class StudentDao(AbsDao):
         :param      student_id: student's id, primary key in database
         :exception
         """
+        # 0: check param
+        self.raise_dao_exception_if_any_empty(student_id=student_id)
+
         # 1: query all student
         students = self._database.get_students()
         # check if students list is empty
@@ -137,3 +151,13 @@ class StudentDao(AbsDao):
 
         # 3: saving remain students to database
         self._database.write_students(remain_students)
+
+    @staticmethod
+    def raise_dao_exception_if_repeated(students, student):
+        for item in students:
+            if item.get_student_id() == student.get_student_id():
+                raise DataAccessException("Student id (" + student.get_student_id() + ") already exists.")
+            if item.get_student_name() == student.get_student_name():
+                raise DataAccessException("Student name (" + student.get_student_name() + ") already exists.")
+            if item.get_student_email() == student.get_student_email():
+                raise DataAccessException("Student email (" + student.get_student_email() + ") already exists.")

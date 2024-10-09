@@ -54,6 +54,12 @@ def test_student_dao():
     for student in students:
         print(str(student))
     print("-----------------------")
+    stu = student_dao.query_student_by_email("email3")
+    print(str(stu))
+    print("---------------------")
+
+    student_dao.delete_student_by_id("id3")
+
     student_dao.add_student(Student("id3","name3","email3","pa3"))
     student = student_dao.query_student_info_by_id("id3")
     print(str(student))
@@ -65,6 +71,7 @@ def test_student_dao():
         print(str(student))
     print("-----------------------")
     student = student_dao.query_student_info_by_id("id1")
+    student.set_student_id("")
     student.set_student_email("name" + str(random.randint(100,200)))
     student.set_student_password("password" + str(random.randint(100,200)))
     student_dao.update_student(student)
@@ -73,6 +80,7 @@ def test_student_dao():
     for student in students:
         print(str(student))
     print("-----------------------")
+
 
 
 def test_subject_dao():
