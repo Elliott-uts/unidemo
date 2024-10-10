@@ -1,5 +1,6 @@
 from control.cli.admin_control import AdminControl
 from control.cli.student_control import StudentControl
+from util.util import input_cyan
 
 
 class CLIUniApp:
@@ -17,7 +18,7 @@ class CLIUniApp:
         :return: None
         """
         while True:
-            option = str(input("University System: (A)dmin, (S)tudent, or X : ")).upper()
+            option = str(input_cyan("University System: (A)dmin, (S)tudent, or X : ")).upper()
 
             # show admin menu
             if option == 'A':

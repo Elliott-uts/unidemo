@@ -64,7 +64,7 @@ class StudentService:
         # 1: check whether student exists or not ( eq: check if email exists )
         #    should invoke _student_dao.query_student_by_email to check whether the input email exists.
         if self._student_dao.query_student_by_email(email):
-            raise BusinessException("Student " + util.get_prefix_from_email(email) + "already exists.")
+            raise BusinessException("Student " + util.get_prefix_from_email(email) + " already exists.")
 
         # 2: build student object
         # 2.1: using student's constructor with parameters of student_id, student_name, student_email, student_password

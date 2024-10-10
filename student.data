@@ -6,6 +6,20 @@
             "email": "Tony@university.com",
             "password": "2c561cf19babebd982f293ebce7c3abe",
             "category": null
+        },
+        {
+            "id": "556528",
+            "name": "elliott.li",
+            "email": "elliott.li@university.com",
+            "password": "2c561cf19babebd982f293ebce7c3abe",
+            "category": null
+        },
+        {
+            "id": "584429",
+            "name": "kenneth",
+            "email": "kenneth@university.com",
+            "password": "2c561cf19babebd982f293ebce7c3abe",
+            "category": null
         }
     ],
     "admins": [],
@@ -21,6 +35,66 @@
             "subject_id": "549",
             "mark": 66,
             "grade": "C"
+        },
+        {
+            "student_id": "732467",
+            "subject_id": "188",
+            "mark": 33,
+            "grade": "Z"
+        },
+        {
+            "student_id": "732467",
+            "subject_id": "628",
+            "mark": 29,
+            "grade": "Z"
+        },
+        {
+            "student_id": "556528",
+            "subject_id": "548",
+            "mark": 70,
+            "grade": "C"
+        },
+        {
+            "student_id": "556528",
+            "subject_id": "201",
+            "mark": 90,
+            "grade": "HZ"
+        },
+        {
+            "student_id": "556528",
+            "subject_id": "035",
+            "mark": 65,
+            "grade": "C"
+        },
+        {
+            "student_id": "556528",
+            "subject_id": "623",
+            "mark": 79,
+            "grade": "D"
+        },
+        {
+            "student_id": "584429",
+            "subject_id": "455",
+            "mark": 29,
+            "grade": "Z"
+        },
+        {
+            "student_id": "584429",
+            "subject_id": "049",
+            "mark": 73,
+            "grade": "C"
+        },
+        {
+            "student_id": "584429",
+            "subject_id": "985",
+            "mark": 77,
+            "grade": "D"
+        },
+        {
+            "student_id": "584429",
+            "subject_id": "115",
+            "mark": 81,
+            "grade": "D"
         }
     ]
 }

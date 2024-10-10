@@ -1,4 +1,5 @@
 from service.admin_service import AdminService
+from util.util import input_cyan
 
 
 class AdminControl:
@@ -23,12 +24,12 @@ class AdminControl:
     def show_admin_main_menu(self):
         while True:
             try:
-                option = str(input("Admin System: (c/g/p/r/s/x) : ")).lower()
+                option = str(input_cyan("Admin System: (c/g/p/r/s/x) : ")).lower()
 
                 # call _admin_service.clear_database to delete all student's information and enrollment records.
                 if option == 'c':
                     print("Clearing students database.")
-                    confirm = str(input("Are you sure you want to clear the database (Y)ES/(N)O: "))
+                    confirm = str(input_cyan("Are you sure you want to clear the database (Y)ES/(N)O: "))
                     if confirm == 'Y':
                         self._admin_service.clear_database()
                         print("Students data cleared.")
@@ -52,7 +53,7 @@ class AdminControl:
 
                 # call _admin_service.remove_student to remove student by id.
                 elif option == 'r':
-                    student_id = str(input("Remove by ID: "))
+                    student_id = str(input_cyan("Remove by ID: "))
                     self._admin_service.remove_student(student_id)
 
                 # call _admin_service.show_all_students to show all student's and enrollment information.
