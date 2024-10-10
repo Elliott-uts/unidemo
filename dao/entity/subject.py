@@ -25,7 +25,7 @@ class Subject:
                         please use traditional getter, don't use property to define getter
     """
 
-    def __init__(self, student_id, subject_id, subject_mark, subject_grade):
+    def __init__(self, student_id, subject_id, subject_mark=None, subject_grade=None):
         # _student_id is an attribute of Student class, exist as part of composite primary key of Subject table.
         self._student_id = student_id
 
@@ -93,8 +93,8 @@ class Subject:
         override the super default str method to customize an output for a specific subject object
         :return: a shorten desc combination of all attributes.
         """
-        return ("studentId: {}, \tsubjectId: {}, \tmark: {}, \tgrade: {}"
-                .format(self._student_id, self._subject_id, self._subject_mark, self._subject_grade))
+        return ("[ Subject::{} -- mark = {} -- grade = {}"
+                .format(self._subject_id, self._subject_mark, self._subject_grade))
 
     def __hash__(self):
         """
@@ -105,9 +105,8 @@ class Subject:
 
     def to_dict(self):
         return {"student_id": self._student_id, "subject_id": self._subject_id,
-                "grade": self._subject_grade, "mark": self._subject_mark}
+                "mark": self._subject_mark, "grade": self._subject_grade}
 
     @classmethod
     def from_dict(cls, dict_data):
-        return cls(dict_data['student_id'], dict_data['subject_id'], dict_data['grade']
-                   , dict_data['mark'])
+        return cls(dict_data['student_id'], dict_data['subject_id'], dict_data['mark'], dict_data['grade'])

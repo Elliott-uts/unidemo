@@ -1,4 +1,7 @@
+from dao.entity.student import Student
 from dao.impl.student_dao import StudentDao
+from util import util
+from util.exception import BusinessException
 
 
 class StudentService:
@@ -20,37 +23,36 @@ class StudentService:
     def __init__(self):
         # init _student_dao by using default constructor of StudentDao
         self._student_dao = StudentDao()
+        self._student = None
 
-    def login(self) -> bool:
+    def set_student(self, student: Student | None):
+        self._student = student
+
+    def get_student(self) -> Student:
+        return self._student
+
+    def login(self, email, password) -> Student | None:
         """
         perform login process
 
-        :param email:       student's email used as parameter to query from data file and fetch a student object.
+        :param email:       student's email used as parameter to query from database.
         :param password:    student's password used for comparison if the input parameter is the same as it in database.
         :return: Student:   if student login successfully, return student object, otherwise None
         """
-        print("Student Log in")
-        # 1: get email and password from keyboard
-        # email = str(input("Email: "))
-        # password = str(input("Password: "))
 
-        # 2: check email and password pattern by calling Util.check_pattern
-        # check_ret = Util.check_pattern(email, password)
-        # if not check_ret:
-        #     pass
+        # 1: query student basic information by using student_email by calling _student_dao.query_student_by_email
+        student = self._student_dao.query_student_by_email(email)
+        if not student:
+            raise BusinessException("Student does not exist.")
 
-        # 3: query student basic information by using student_name by calling _student_dao.query_student_by_email
-        # TODO
+        # 2: encode password of parameter, and then compare the encryption
+        password_encryption = util.encode_md5(password)
+        if password_encryption != student.get_student_password():
+            raise BusinessException("Email or password error.")
 
-        # 4: encode password of parameter, and then compare the encryption
-        # TODO
+        return student
 
-        # 5: upon logining, assign student entity to field: _student
-        # TODO
-
-        return False
-
-    def register(self) -> bool:
+    def register(self, email, password, name):
         """
         register by using username, email and password.
         :param name:        student's name, must be unique
@@ -59,52 +61,56 @@ class StudentService:
         :return: None
         """
 
-        print("Student Sign Up")
-        # 1: get email and password from keyboard
-        # email = str(input("Email: "))
-        # password = str(input("Password: "))
-        # name = str(input("Name: "))
+        # 1: check whether student exists or not ( eq: check if email exists )
+        #    should invoke _student_dao.query_student_by_email to check whether the input email exists.
+        if self._student_dao.query_student_by_email(email):
+            raise BusinessException("Student " + util.get_prefix_from_email(email) + "already exists.")
 
-        # 2: check email and password pattern by calling Util.check_pattern
-        # check_ret = Util.check_pattern(email, password)
-        # if not check_ret:
-        #     return False
-
-        # 3: check whether student is existed or not ( eq: check if the email is exist )
-        #      should invoke _student_dao.query_student_by_email to check whether the input email is exist.
-        # TODO
-
-        # 4: build student object
-        # 4.1: using student's constructor with parameters of student_id, student_name, student_email, student_password
-        #   **Note** DO NOT need to pass by student_category and subject_list
+        # 2: build student object
+        # 2.1: using student's constructor with parameters of student_id, student_name, student_email, student_password
+        #   **Note** DO NOT need to init student_category and subject_list
         #            due to system automatically assigned to with a separate process
-        # 4.2: generate a encryption for password
-        # TODO
+        # 2.2: generate a encryption for password
+        # 2.3: generating a student id
+        # 2.4: encode password
 
-        # 5: invoking _student_dao.add_student to saving a new student.
-        # TODO
+        student_id = self.generate_student_unique_id()
+        password_encryption = util.encode_md5(password)
+        student = Student(student_id, name, email, password_encryption)
 
-        return False
+        # 3: invoking _student_dao.add_student to saving a new student.
+        self._student_dao.add_student(student)
 
-    def change_password(self) -> bool:
+    def change_password(self, new_password):
         """
         used for customer to modify their password.
-
-        :return: None
         """
+        # 1: raise exception if student isn't in logging state.
+        if not self._student:
+            raise BusinessException("Please login in first.")
 
-        # 1: query student entity by email.
-        #    call _student_dao.query_student_by_email
-        # TODO
-
-        # 2: check whether new_password meet the pattern requirement.
-        # TODO
-
-        # 3: check whether old_password equals exist password.
-        #    encode password of parameter, and then compare the encryption
+        # 2: encode password of parameter, and then compare the encryption
         #    call @Util.encode_md5 to get encrypted string
-        # TODO
+        new_password_encryption = util.encode_md5(new_password)
 
-        # 4: update data to database file
-        #    call _student_dao.update_student
-        pass
+        # 2: update data to database file
+        student = self._student_dao.query_student_info_by_id(self.get_student().get_student_id())
+        student.set_student_password(new_password_encryption)
+        self._student_dao.update_student(student)
+
+    @staticmethod
+    def check_register_params(email, password) -> bool:
+        # 1: check parameters to find whether they meet the pattern requirements.
+        #   please call Util.check_email_pattern to check whether email is valid.
+        #   please call Util.check_password_pattern to check whether password is valid
+        ret1 = util.check_email_pattern(email)
+        ret2 = util.check_password_pattern(password)
+
+        # 2 encapsulate result of combination of ret1 and ret2
+        return ret1 and ret2
+
+    def generate_student_unique_id(self):
+        while True:
+            student_id = util.generate_random_6_digit_number()
+            if not self._student_dao.query_student_info_by_id(student_id):
+                return student_id

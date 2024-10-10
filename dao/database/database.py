@@ -44,14 +44,27 @@ class Database:
         self._subjects = []
 
         """
-        step 2: state the file path as static and then init the file if file is not exist.
+        step 2: state the file path as static and then init the file if file exists.
         """
         # current work path
         current_dir = os.getcwd()
         # project root path
         project_root = os.path.abspath(os.path.join(current_dir, '..'))
         # data file path
-        self._data_file_path = os.path.join(project_root, 'student.data')
+        self._data_file_path = os.path.join(project_root, 'unidemo', 'student.data')
+
+        # init file
+        self._init_file()
+
+    def _init_file(self):
+        # Check if the file exists, if not, create it
+        if not os.path.exists(self._data_file_path):
+            # Create the directory if it doesn't exist
+            os.makedirs(os.path.dirname(self._data_file_path), exist_ok=True)
+
+            # Create an empty file or initialize with some content
+            with open(self._data_file_path, 'w') as file:
+                file.write('')  # Write an empty file or add some initial content here
 
     def get_students(self):
         # getter for _students
@@ -104,6 +117,8 @@ class Database:
 
     def _load_data(self):
         # load data from file using JSON tools
+        self._init_file()
+
         # step 1: load all data from student.data by using _data_file_path
         with open(self._data_file_path, 'r') as file:
             content = file.read()
@@ -119,6 +134,7 @@ class Database:
 
     def _overwrite_data(self):
         # overwrite all data to student.data file
+        self._init_file()
 
         # step 1: format objects to json string
         data = {
@@ -131,3 +147,6 @@ class Database:
         # step 2: overwrite all data to file
         with open(self._data_file_path, 'w') as file:
             file.write(json_str)
+
+    def delete_data_file(self):
+        os.remove(self._data_file_path)

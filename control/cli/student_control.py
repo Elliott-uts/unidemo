@@ -1,5 +1,8 @@
+
 from service.student_service import StudentService
 from service.subject_service import SubjectService
+from util import util
+from util.constant import Constant
 
 
 class StudentControl:
@@ -21,22 +24,61 @@ class StudentControl:
         self._student_service = StudentService()
         self._subject_service = SubjectService()
 
+    def _set_login_session(self, student):
+        self._student_service.set_student(student)
+        self._subject_service.set_student(student)
+
+    def _clear_login_session(self):
+        self._student_service.set_student(None)
+        self._subject_service.set_student(None)
+
+    @staticmethod
+    def get_register_params_from_keyboard():
+        print("Student Sign Up")
+        email = str(input("Email: "))
+        password = str(input("Password: "))
+
+        return {"email": email, "password": password}
+
+    @staticmethod
+    def get_login_params_from_keyboard():
+        print("Student Sign In")
+        email = str(input("Email: "))
+        password = str(input("Password: "))
+        return {"email": email, "password": password}
+
     def show_student_main_menu(self):
         while True:
             try:
-                option = str(input("\tStudent System: (l/r/x) : ")).lower()
+                option = str(input("Student System: (l/r/x) : ")).lower()
 
                 # call _student_service.login to log in for performing further operations
                 if option == 'l':
                     # upon logining, show student operation menu.
-                    if self._student_service.login():
+                    params = self.get_login_params_from_keyboard()
+                    if self._student_service.check_register_params(params.get("email"), params.get("password")):
+                        print("email and password formats acceptable.")
+                    else:
+                        print("Incorrect email and password format.")
+                        continue
+                    student = self._student_service.login(params.get("email"), params.get("password"))
+                    if student:
+                        self._set_login_session(student)
                         self._show_student_operation_menu()
                 # call student_service.register to register a new student
                 elif option == 'r':
-                    self._student_service.register()
-
+                    params = self.get_login_params_from_keyboard()
+                    if self._student_service.check_register_params(params.get("email"), params.get("password")):
+                        print("email and password formats acceptable.")
+                    else:
+                        print("Incorrect email and password format.")
+                        continue
+                    name = str(input("Name: "))
+                    self._student_service.register(params.get("email"), params.get("password"), name)
+                    print("Enrolling Student " + name)
                 # navigate to University System Menu
                 elif option == 'x':
+                    self._clear_login_session()
                     break
 
                 # incorrect input, loop continue
@@ -48,27 +90,41 @@ class StudentControl:
     def _show_student_operation_menu(self):
         while True:
             try:
-                option = str(input("\tStudent Course Menu: (c/e/r/s/x) : ")).lower()
+                option = str(input("Student Course Menu: (c/e/r/s/x) : ")).lower()
 
                 # for changing student's password
                 # call _student_service.change_password
                 if option == 'c':
-                    self._student_service.change_password()
+                    print("Updating Password")
+                    new_password = self.get_new_password_from_keyboard()
+                    if not util.check_password_pattern(new_password):
+                        print("Incorrect password format.")
+                        continue
+                    self._student_service.change_password(new_password)
 
                 # for subject enrollment
                 # call _subject_service.enroll_subject()
                 elif option == 'e':
-                    self._subject_service.enroll_subject()
+                    res = self._subject_service.enroll_subject()
+                    print(f"Enrolling in Subject-{res.get(Constant.KEY_SUBJECT_ID)}.")
+                    print(f"You are now enrolled in {res.get(Constant.KEY_COUNT)} out of 4 subjects")
 
                 # for removing subject enrollment
                 # call _subject_service.remove_subject()
                 elif option == 'r':
-                    self._subject_service.remove_subject()
+                    subject_id = str(input("Remove Subject By ID: "))
+                    res = self._subject_service.remove_subject(subject_id)
+                    print(f"Dropping Subject-{res.get(Constant.KEY_SUBJECT_ID)}.")
+                    print(f"You are now enrolled in {res.get(Constant.KEY_COUNT)} out of 4 subjects")
 
                 # for showing enrolled subjects
                 # call _subject_service.show_subjects()
                 elif option == 's':
-                    self._subject_service.show_subjects()
+                    subjects = self._subject_service.query_subjects()
+                    print(f"Showing {len(subjects)} subjects")
+                    if subjects:
+                        for subject in subjects:
+                            print(str(subject))
 
                 # for navigating to parent menu
                 elif option == 'x':
@@ -79,3 +135,15 @@ class StudentControl:
                     raise Exception("Incorrect input, please try again.")
             except Exception as e:
                 print(str(e))
+
+    @staticmethod
+    def get_new_password_from_keyboard():
+        new_password = str(input("New Password: "))
+        confirm_password = str(input("Confirm Password: "))
+        while True:
+            if new_password != confirm_password:
+                print("Password does not match - try again.")
+                confirm_password = str(input("Confirm Password: "))
+            else:
+                break
+        return new_password

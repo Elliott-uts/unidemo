@@ -1,6 +1,7 @@
 from dao.database.database import Database
 from dao.entity.admin import Admin
 from dao.impl.abs_dao import AbsDao
+from util.exception import DataAccessException
 
 
 class AdminDao(AbsDao):
@@ -34,3 +35,9 @@ class AdminDao(AbsDao):
         admins = self._database.get_admins()
         matching_admins = [admin for admin in admins if admin.get_staff_name() == staff_name]
         return matching_admins[0] if matching_admins else None
+
+    def delete_all_students_and_subjects(self):
+        try:
+            self._database.delete_data_file()
+        except Exception as e:
+            raise DataAccessException(str(e))

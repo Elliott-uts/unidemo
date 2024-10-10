@@ -110,8 +110,8 @@ class Student:
         override the super default str method to customize an output for a specific Admin object
         :return: a shorten desc combination staff_id and staff_name
         """
-        return ("studentId: {}, \tstudentName: {}, \tstudentEmail: {}"
-                .format(self._student_id, self._student_name, self._student_email))
+        return ("{}\t:: {} --> {}"
+                .format(self._student_name, self._student_id, self._student_email))
 
     def __hash__(self):
         """
@@ -128,5 +128,4 @@ class Student:
     @classmethod
     def from_dict(cls, dict_data):
         return cls(dict_data['id'], dict_data['name'], dict_data['email']
-                   ,dict_data['password'], dict_data['category'])
-
+                   , dict_data['password'], dict_data['category'])

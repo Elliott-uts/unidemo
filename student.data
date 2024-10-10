@@ -1,38 +1,26 @@
 {
     "students": [
         {
-            "id": "id2",
-            "name": "name2",
-            "email": "email2",
-            "password": "pass2",
-            "category": "c2"
-        },
-        {
-            "id": "id1",
-            "name": "name1",
-            "email": "name101",
-            "password": "password164",
-            "category": "c1"
+            "id": "732467",
+            "name": "tony",
+            "email": "Tony@university.com",
+            "password": "2c561cf19babebd982f293ebce7c3abe",
+            "category": null
         }
     ],
-    "admins": [
-        {
-            "id": "id1",
-            "name": "name1",
-            "email": "email1"
-        },
-        {
-            "id": "id2",
-            "name": "name2",
-            "email": "email2"
-        }
-    ],
+    "admins": [],
     "subjects": [
         {
-            "student_id": "id1",
-            "subject_id": "id1",
-            "grade": "B",
-            "mark": 100
+            "student_id": "732467",
+            "subject_id": "308",
+            "mark": 71,
+            "grade": "C"
+        },
+        {
+            "student_id": "732467",
+            "subject_id": "549",
+            "mark": 66,
+            "grade": "C"
         }
     ]
 }

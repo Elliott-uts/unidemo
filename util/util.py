@@ -1,26 +1,23 @@
 import json
+import re
+import hashlib
+import random
+
+
+def is_any_empty(self, *params):
+    """if any param is empty，raise data access exception，and show them"""
+    empty_params = [key for key, value in params if is_empty(value)]
+    return empty_params
+
+
+def is_all_empty(self, *params):
+    """if all params are empty，raise data access exception，and show them all"""
+    return all(is_empty(value) for value in params)
 
 
 def is_empty(param) -> bool:
     """check single param if it is empty"""
     return param is None or param == ""
-
-
-def check_pattern(email, password) -> bool:
-    # 1: check parameters to find whether they meet the pattern requirements.
-    #   please call Util.check_email_pattern to check whether email is valid.
-    #   please call Util.check_password_pattern to check whether password is valid
-    ret1 = check_email_pattern(email)
-    ret2 = check_password_pattern(password)
-
-    # 2 encapsulate result of combination of ret1 and ret2
-    ret = ret1 and ret2
-    if ret:
-        print("Email and password formats acceptable.")
-    else:
-        print("Incorrect email or passport format.")
-
-    return ret
 
 
 def check_email_pattern(email) -> bool:
@@ -33,8 +30,10 @@ def check_email_pattern(email) -> bool:
     :return:    True: meet pattern
                 False(default value): don't meet pattern
     """
-    # TODO
-    return False
+    if email.endswith("@university.com"):
+        return True
+    else:
+        return False
 
 
 def check_password_pattern(password) -> bool:
@@ -47,16 +46,62 @@ def check_password_pattern(password) -> bool:
     :return: True:  meet pattern
              False: don't meet pattern
     """
-    # TODO
-    return False
+    # Regular expression pattern
+    pattern = r'^[A-Z][a-zA-Z]{4,}[0-9]{3,}$'
+
+    # Use regular expression to match the password
+    if re.match(pattern, password):
+        return True
+    else:
+        return False
 
 
 def encode_md5(content) -> str:
     """
-    encode content by using md5
-    :param content: text-based content
-    :return: md5 hex hash value with 32-digit value.
+    Encode content using MD5.
+
+    :param content: Text-based content to be encoded
+    :return: MD5 hex hash value with 32-digit value.
     """
-    # TODO
-    md5_value = ""
+    # Create an MD5 hash object
+    md5_hash = hashlib.md5()
+
+    # Update the hash object with the bytes of the content
+    md5_hash.update(content.encode('utf-8'))
+
+    # Get the hexadecimal representation of the hash
+    md5_value = md5_hash.hexdigest()
+
     return md5_value
+
+
+def get_prefix_from_email(email):
+    if '@' in email:
+        prefix, domain = email.split('@', 1)
+        return prefix
+    else:
+        return None
+
+
+def generate_random_6_digit_number():
+    # Generate a random integer between 1 and 999999
+    number = random.randint(1, 999999)
+
+    # Format the number as a 6-digit string, padding with leading zeros if necessary
+    formatted_number = f"{number:06d}"
+
+    return formatted_number
+
+
+def generate_random_subject() -> str:
+    """
+    generate a 3-digit number as a subject id
+    :return:
+    """
+    number = random.randint(1, 999)
+
+    # Format the number as a 6-digit string, padding with leading zeros if necessary
+    formatted_number = f"{number:03d}"
+
+    return str(formatted_number)
+

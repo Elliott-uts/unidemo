@@ -49,6 +49,16 @@ class SubjectDao(AbsDao):
         # 3: saving data to file
         self._database.write_subjects(subjects)
 
+    def query_subject_count_by_student_id(self, student_id) -> int:
+        subjects = self.query_subject_list_by_student_id(student_id)
+        return len(subjects) if subjects else 0
+
+    def query_all_subjects(self):
+        # 1: query all subject list
+        subjects = self._database.get_subjects()
+        # check if subjects list is empty
+        return subjects if subjects else []
+
     def query_subject_list_by_student_id(self, student_id) -> List[Subject]:
         """
         query all subject list of one particular student by using student id
@@ -154,8 +164,6 @@ class SubjectDao(AbsDao):
         # 2: remove subjects that should be deleted
         remain_subjects = [item for item in subjects if (item.get_student_id() != subject.get_student_id()
                                                          or item.get_subject_id() != subject.get_subject_id())]
-        # 3: check duplication
-        self.raise_dao_exception_if_repeated(subjects, subject)
 
         # 3: add new subject that should be added
         remain_subjects.append(subject)
