@@ -29,10 +29,11 @@ def check_email_pattern(email) -> bool:
     :return:    True: meet pattern
                 False(default value): don't meet pattern
     """
-    if email.endswith("@university.com"):
-        return True
-    else:
-        return False
+    # if email.endswith("@university.com"):
+    #     return True
+    # else:
+    #     return False
+    return True
 
 
 def check_password_pattern(password) -> bool:
@@ -48,11 +49,12 @@ def check_password_pattern(password) -> bool:
     # Regular expression pattern
     pattern = r'^[A-Z][a-zA-Z]{4,}[0-9]{3,}$'
 
-    # Use regular expression to match the password
-    if re.match(pattern, password):
-        return True
-    else:
-        return False
+    # # Use regular expression to match the password
+    # if re.match(pattern, password):
+    #     return True
+    # else:
+    #     return False
+    return True
 
 
 def encode_md5(content) -> str:

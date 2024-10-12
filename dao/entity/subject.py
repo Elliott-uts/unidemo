@@ -93,7 +93,7 @@ class Subject:
         override the super default str method to customize an output for a specific subject object
         :return: a shorten desc combination of all attributes.
         """
-        return ("[ Subject::{} -- mark = {} -- grade = {}"
+        return ("[ Subject::{} -- mark = {} -- grade = {} ]"
                 .format(self._subject_id, self._subject_mark, self._subject_grade))
 
     def __hash__(self):
