@@ -10,7 +10,6 @@ class AbsDao:
     Providing some basic method:
         raise_exception_if_any_empty    if any param is empty，raise data access exception
         raise_exception_if_all_empty    if all params are empty，raise data access exception
-        is_empty                        check single param if it is empty
     """
 
     def __init__(self):
