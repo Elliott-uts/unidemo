@@ -1,5 +1,5 @@
 from service.admin_service import AdminService
-from util.util import input_cyan
+from util.print_util import input_cyan
 
 
 class AdminControl:

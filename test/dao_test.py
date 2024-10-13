@@ -10,21 +10,20 @@ from dao.impl.subject_dao import SubjectDao
 
 
 def test_database():
-
     database = Database()
 
-    students = [Student("id1", "name1","email1", "pass1", "c1"),
-                Student("id2", "name2","email2", "pass2", "c2")]
+    students = [Student("id1", "name1", "email1", "pass1", "c1"),
+                Student("id2", "name2", "email2", "pass2", "c2")]
 
-    subjects = [Subject("id1","id1", 89, "A")]
+    subjects = [Subject("id1", "id1", 89, "A")]
 
-    admins = [Admin("id1", "name1", "email1"), Admin("id2","name2","email2")]
+    admins = [Admin("id1", "name1", "email1"), Admin("id2", "name2", "email2")]
 
     database.write_admins(admins)
     database.write_subjects(subjects)
     database.write_students(students)
 
-    subjects = [Subject("id1","id1", 100, "B")]
+    subjects = [Subject("id1", "id1", 100, "B")]
     database.write_subjects(subjects)
 
     get_subjects = database.get_subjects()
@@ -60,7 +59,7 @@ def test_student_dao():
 
     student_dao.delete_student_by_id("id3")
 
-    student_dao.add_student(Student("id3","name3","email3","pa3"))
+    student_dao.add_student(Student("id3", "name3", "email3", "pa3"))
     student = student_dao.query_student_info_by_id("id3")
     print(str(student))
     print("-----------------------")
@@ -72,15 +71,14 @@ def test_student_dao():
     print("-----------------------")
     student = student_dao.query_student_info_by_id("id1")
     student.set_student_id("")
-    student.set_student_email("name" + str(random.randint(100,200)))
-    student.set_student_password("password" + str(random.randint(100,200)))
+    student.set_student_email("name" + str(random.randint(100, 200)))
+    student.set_student_password("password" + str(random.randint(100, 200)))
     student_dao.update_student(student)
 
     students = student_dao.query_student_list()
     for student in students:
         print(str(student))
     print("-----------------------")
-
 
 
 def test_subject_dao():
@@ -114,6 +112,3 @@ def test_subject_dao():
     subject_dao.delete_subject_by_student_and_subject("id4", "id5")
     subject_dao.delete_subject_by_student_and_subject("id3", "id3")
     subject_dao.delete_subject_list_by_student_id("id5")
-
-
-

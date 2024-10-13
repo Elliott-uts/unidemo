@@ -1,6 +1,6 @@
 from control.cli.admin_control import AdminControl
 from control.cli.student_control import StudentControl
-from util.util import input_cyan
+from util.print_util import input_cyan
 
 
 class CLIUniApp:

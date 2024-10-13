@@ -2,7 +2,7 @@ from typing import List
 
 from dao.entity.subject import Subject
 from dao.impl.abs_dao import AbsDao
-from util.exception import PrimaryKeyDuplicationException, UniqueKeyDuplicationException
+from util.exception import PrimaryKeyDuplicationException
 
 
 class SubjectDao(AbsDao):

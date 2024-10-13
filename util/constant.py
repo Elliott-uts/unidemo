@@ -1,4 +1,4 @@
-from enum import Enum, auto
+from enum import Enum
 
 
 class Constant(Enum):
@@ -7,6 +7,3 @@ class Constant(Enum):
     # type 1: KEYs for return map in service layer
     KEY_SUBJECT_ID = "subject_id"
     KEY_COUNT = "key_count"
-
-
-    

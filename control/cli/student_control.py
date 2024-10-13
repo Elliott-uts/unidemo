@@ -1,9 +1,9 @@
 
 from service.student_service import StudentService
 from service.subject_service import SubjectService
-from util import util
+from util import validation
 from util.constant import Constant
-from util.util import input_cyan, print_green, print_red, print_yellow
+from util.print_util import input_cyan, print_green, print_red, print_yellow
 
 
 class StudentControl:
@@ -98,7 +98,7 @@ class StudentControl:
                 if option == 'c':
                     print_yellow("Updating Password")
                     new_password = self.get_new_password_from_keyboard()
-                    if not util.check_password_pattern(new_password):
+                    if not validation.check_password_pattern(new_password):
                         print_red("Incorrect password format.")
                         continue
                     self._student_service.change_password(new_password)
