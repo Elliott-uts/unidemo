@@ -2,7 +2,7 @@
 import tkinter as tk
 from tkinter import messagebox
 
-from util import util
+from util.py import util
 from util.constant import Constant
 
 
