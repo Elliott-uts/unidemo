@@ -4,6 +4,7 @@ from tkinter import messagebox
 
 from util import validation
 from util.constant import Constant
+from util.validation import Validation
 
 
 def show_operation_menu(root, student_service, subject_service):
@@ -125,7 +126,7 @@ def show_change_password_menu(root, student_service, subject_service):
             confirm_password = confirm_password_entry.get()
             if new_password == confirm_password:
 
-                if not validation.check_password_pattern(new_password):
+                if not Validation.check_password_pattern(new_password):
                     messagebox.showerror("Error", "Incorrect password format.")
                 else:
                     student_service.change_password(new_password)

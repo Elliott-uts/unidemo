@@ -12,12 +12,6 @@
     "subjects": [
         {
             "student_id": "388107",
-            "subject_id": "010",
-            "mark": 69,
-            "grade": "C"
-        },
-        {
-            "student_id": "388107",
             "subject_id": "376",
             "mark": 49,
             "grade": "Z"
