@@ -20,7 +20,7 @@ class TestDatabase(unittest.TestCase):
         # write students
         self.database.write_students(self.students)
         # get students
-        get_students = self.database.get_students()
+        get_students = self.database.read_students()
 
         # check result
         self.assertEqual(len(get_students), 2)
@@ -32,19 +32,19 @@ class TestDatabase(unittest.TestCase):
         new_student = Student("student_id3", "student_name3", "email3", "pass3", "c1")
         self.students.append(new_student)
         self.database.write_students(self.students)
-        get_students = self.database.get_students()
+        get_students = self.database.read_students()
         # check result
         self.assertEqual(len(get_students), 3)
         self.assertEqual(get_students[2].get_student_id(), "student_id3")
         self.assertEqual(get_students[2].get_student_name(), "student_name3")
 
     def test_remove_student(self):
-        get_students = self.database.get_students()
+        get_students = self.database.read_students()
         students = [student for student in get_students if student.get_student_id() == "student_id3"]
         get_students.remove(students[0])
 
         self.database.write_students(get_students)
-        get_students = self.database.get_students()
+        get_students = self.database.read_students()
         # check result
         self.assertEqual(len(get_students), 2)
 
@@ -52,7 +52,7 @@ class TestDatabase(unittest.TestCase):
         # write subjects
         self.database.write_subjects(self.subjects)
         # get subjects
-        get_subjects = self.database.get_subjects()
+        get_subjects = self.database.read_subjects()
 
         # check result
         self.assertEqual(len(get_subjects), 1)
@@ -66,7 +66,7 @@ class TestDatabase(unittest.TestCase):
         new_subjects = Subject("student_2", "subject1", 100, "B")
         self.subjects.append(new_subjects)
         self.database.write_subjects(self.subjects)
-        get_subjects = self.database.get_subjects()
+        get_subjects = self.database.read_subjects()
         self.assertEqual(len(get_subjects), 2)
         self.assertEqual(get_subjects[1].get_student_id(), "student_2")
         self.assertEqual(get_subjects[1].get_subject_id(), "subject1")
@@ -74,12 +74,12 @@ class TestDatabase(unittest.TestCase):
         self.assertEqual(get_subjects[1].get_subject_grade(), "B")
 
     def test_remove_subject(self):
-        get_subjects = self.database.get_subjects()
+        get_subjects = self.database.read_subjects()
         subjects = [subject for subject in get_subjects if subject.get_subject_id() == "subject1"]
         get_subjects.remove(subjects[0])
 
         self.database.write_subjects(get_subjects)
-        get_subjects = self.database.get_subjects()
+        get_subjects = self.database.read_subjects()
         # check result
         self.assertEqual(len(get_subjects), 1)
 

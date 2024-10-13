@@ -39,7 +39,7 @@ class StudentDao(AbsDao):
                                               student_email=student.get_student_email())
 
         # 1: query students list
-        students = self._database.get_students()
+        students = self._database.read_students()
 
         # 2: check for none and duplicate entity
         if students:
@@ -63,7 +63,7 @@ class StudentDao(AbsDao):
         self.raise_dao_exception_if_any_empty(student_id=student_id)
 
         # 1: query all student
-        students = self._database.get_students()
+        students = self._database.read_students()
         # check if students list is empty
         if not students:
             return None
@@ -84,7 +84,7 @@ class StudentDao(AbsDao):
         self.raise_dao_exception_if_any_empty(email=email)
 
         # 1: query all student
-        students = self._database.get_students()
+        students = self._database.read_students()
         # check if students list is empty
         if not students:
             return None
@@ -99,7 +99,7 @@ class StudentDao(AbsDao):
         query all students
         :return: List[Student]
         """
-        students = self._database.get_students()
+        students = self._database.read_students()
         return students if students else []
 
     def update_student(self, student):
@@ -116,7 +116,7 @@ class StudentDao(AbsDao):
                                               student_email=student.get_student_email())
 
         # 1: query student
-        students = self._database.get_students()
+        students = self._database.read_students()
 
         # 2: remove student that should be deleted
         remain_students = [item for item in students if item.get_student_id() != student.get_student_id()]
@@ -141,7 +141,7 @@ class StudentDao(AbsDao):
         self.raise_dao_exception_if_any_empty(student_id=student_id)
 
         # 1: query all student
-        students = self._database.get_students()
+        students = self._database.read_students()
         # check if students list is empty
         if not students:
             return
