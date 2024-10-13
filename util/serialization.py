@@ -14,7 +14,7 @@ class Serialization:
         return formatted_number
 
     @staticmethod
-    def generate_random_subject() -> str:
+    def generate_random_subject_id() -> str:
         """
         generate a 3-digit number as a subject id
         :return:
