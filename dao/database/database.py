@@ -51,7 +51,7 @@ class Database:
         # project root path
         project_root = os.path.abspath(os.path.join(current_dir, '..'))
         # data file path
-        self._data_file_path = os.path.join(project_root, 'unidemo', 'student.data')
+        self._data_file_path = os.path.join(project_root, 'file', 'student.data')
 
         # init file
         self._init_file()
