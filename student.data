@@ -1,37 +1,37 @@
 {
     "students": [
         {
-            "id": "615789",
+            "id": "388107",
             "name": "tony",
-            "email": "tony@uni.com",
-            "password": "ddc5f5e86d2f85e1b1ff763aff13ce0a",
+            "email": "tony@university.com",
+            "password": "2c561cf19babebd982f293ebce7c3abe",
             "category": null
         }
     ],
     "admins": [],
     "subjects": [
         {
-            "student_id": "615789",
-            "subject_id": "279",
-            "mark": 56,
-            "grade": "P"
-        },
-        {
-            "student_id": "615789",
-            "subject_id": "257",
-            "mark": 66,
+            "student_id": "388107",
+            "subject_id": "010",
+            "mark": 69,
             "grade": "C"
         },
         {
-            "student_id": "615789",
-            "subject_id": "109",
-            "mark": 92,
-            "grade": "HZ"
+            "student_id": "388107",
+            "subject_id": "376",
+            "mark": 49,
+            "grade": "Z"
         },
         {
-            "student_id": "615789",
-            "subject_id": "042",
-            "mark": 37,
+            "student_id": "388107",
+            "subject_id": "089",
+            "mark": 38,
+            "grade": "Z"
+        },
+        {
+            "student_id": "388107",
+            "subject_id": "862",
+            "mark": 25,
             "grade": "Z"
         }
     ]

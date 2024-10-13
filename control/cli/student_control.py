@@ -95,7 +95,7 @@ class StudentControl:
 
                 # for changing student's password
                 # call _student_service.change_password
-                if option == 'c':
+                if option == Constant.S_CHANGE_PASSWORD:
                     print_yellow("Updating Password")
                     new_password = self.get_new_password_from_keyboard()
                     if not validation.check_password_pattern(new_password):
@@ -105,14 +105,14 @@ class StudentControl:
 
                 # for subject enrollment
                 # call _subject_service.enroll_subject()
-                elif option == 'e':
+                elif option == Constant.S_ENROLLING:
                     res = self._subject_service.enroll_subject()
                     print_yellow(f"Enrolling in Subject-{res.get(Constant.KEY_SUBJECT_ID)}.")
                     print_yellow(f"You are now enrolled in {res.get(Constant.KEY_COUNT)} out of 4 subjects")
 
                 # for removing subject enrollment
                 # call _subject_service.remove_subject()
-                elif option == 'r':
+                elif option == Constant.S_REMOVING:
                     subject_id = str(input_cyan("Remove Subject By ID: "))
                     res = self._subject_service.remove_subject(subject_id)
                     print_yellow(f"Dropping Subject-{res.get(Constant.KEY_SUBJECT_ID)}.")
@@ -120,7 +120,7 @@ class StudentControl:
 
                 # for showing enrolled subjects
                 # call _subject_service.show_subjects()
-                elif option == 's':
+                elif option == Constant.S_SHOW:
                     subjects = self._subject_service.query_subjects()
                     print_yellow(f"Showing {len(subjects)} subjects")
                     if subjects:
@@ -128,7 +128,7 @@ class StudentControl:
                             print(str(subject))
 
                 # for navigating to parent menu
-                elif option == 'x':
+                elif option == Constant.EXIT:
                     break
 
                 # incorrect input, loop continue
