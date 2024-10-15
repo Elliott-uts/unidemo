@@ -138,6 +138,7 @@ class Database:
             self._admins = []
             self._subjects = []
 
+
     def _overwrite_data(self):
         # overwrite all data to student.data file
         self._init_file()
