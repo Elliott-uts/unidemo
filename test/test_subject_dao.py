@@ -41,7 +41,7 @@ class TestSubjectDao(unittest.TestCase):
         self.assertIsNotNone(one)
         self.assertEqual(one.get_subject_mark(), 90)
 
-        # 查询不存在的subject
+        # query subject that is not exiting.
         none_subject = self.subject_dao.query_subject_by_student_and_subject("student_id100", "subject_id100")
         self.assertIsNone(none_subject)
 
@@ -101,7 +101,7 @@ class TestSubjectDao(unittest.TestCase):
         no_subject = self.subject_dao.query_subject_by_student_and_subject("student_id100", "subject_id100")
         self.assertIsNone(no_subject)
 
-        # 删除整个学生的subject列表
+        # delete all student's subjects
         self.subject_dao.delete_subject_list_by_student_id("student_id1")
         subject_list = self.subject_dao.query_subject_list_by_student_id("student_id1")
         self.assertEqual(len(subject_list), 0)
