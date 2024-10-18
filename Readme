@@ -1,0 +1,9 @@
+- University Application
+-
+- CLI
+- 1: go to the rootpath of project (kinda like: /Users/xxxxx/PycharmProjects/unidemo)
+- 2: pyton3 - m control.cli.cli_uni_app
+-
+- GUI
+- 1: go to the rootpath of project (kinda like: /Users/xxxxx/PycharmProjects/unidemo)
+- 2: pyton3 - m control.gui.gui_uni_app
