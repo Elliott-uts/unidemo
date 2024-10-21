@@ -1,12 +1,49 @@
 - University Application
--
+
+25509225	Kuanlong Li
+25392162	Nawaporn(Lynne) Hongnipon
+25502701	Md Saadman Kabir
+25594983	Kenneth Vaz
+
+
+--------------------  How to run the application ----------------------
 - step  1: deactivate
 -
 - step  2:
 - 2.1:  CLI
--       1: go to the rootpath of project (kinda like: /Users/xxxxx/PycharmProjects/unidemo)
+-       1: go to the rootpath of project (kinda like: /Users/xxxxx/xxxxxx/unidemo)
 -       2: python3 -m control.cli.cli_uni_app
 -
 - 2.2:  GUI
--       1: go to the rootpath of project (kinda like: /Users/xxxxx/PycharmProjects/unidemo)
+-       1: go to the rootpath of project (kinda like: /Users/xxxxx/xxxxxx/unidemo)
 -       2: python3 -m control.gui.gui_uni_app
+-
+-------------------- How to allocate the tasks ------------------------
+-
+- Kuanlong Li (Elliott)
+    	1\ Architectural Design: Layered Design, Package Design, Interface Design for All Classes (Input and Output)
+    	2\ Dao and database layer development and util tools development
+
+
+- Kenneth Vaz
+	1\ CLI of student login and registration
+    	2\ Student Basic functions (Focusing on the implementation of Login, Registration and change password).
+
+
+- Md Saadman Kabir
+    	1\ Main Entrance of CLI \ GUI
+    	2\ CLI-Student Control\GUI-Student Control ( Focusing on the showing student operation menu and interact with service layer)
+    	3\ Student Service (Focusing on the implementation of student operational functionalities)
+
+
+- Nawaporn Hongnipon (Lynne)
+	1\ CLI-Admin Control (Focusing on the showing admin oeration menu and interact with service layer)
+    	2\ Admin Service (Focusing on the implementation of admin operational functionalities)
+
+
+--------------------- Description of Architecture ------------------------
+
+
+https://docs.google.com/presentation/d/1WPi8liIsrFKEjYSdJjjGYx1qEmM8worFZu47eSVshG4/edit?usp=sharing
+
+
