@@ -1,9 +1,12 @@
 - University Application
 -
-- CLI
-- 1: go to the rootpath of project (kinda like: /Users/xxxxx/PycharmProjects/unidemo)
-- 2: pyton3 - m control.cli.cli_uni_app
+- step  1: deactivate
 -
-- GUI
-- 1: go to the rootpath of project (kinda like: /Users/xxxxx/PycharmProjects/unidemo)
-- 2: pyton3 - m control.gui.gui_uni_app
+- step  2:
+- 2.1:  CLI
+-       1: go to the rootpath of project (kinda like: /Users/xxxxx/PycharmProjects/unidemo)
+-       2: python3 -m control.cli.cli_uni_app
+-
+- 2.2:  GUI
+-       1: go to the rootpath of project (kinda like: /Users/xxxxx/PycharmProjects/unidemo)
+-       2: python3 -m control.gui.gui_uni_app
